@@ -1,0 +1,218 @@
+<template>
+  <NuxtLayout name="default">
+
+    <!-- ─── HERO ─────────────────────────────────────────── -->
+    <section class="bg-cream-dark overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[480px] lg:min-h-[560px]">
+          <!-- Text -->
+          <div class="flex flex-col justify-center py-12 lg:py-16 pr-0 lg:pr-12 order-2 lg:order-1">
+            <p class="text-primary-600 text-sm font-semibold tracking-widest uppercase mb-3">Koleksi Terbaru 2026</p>
+            <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-4">
+              Hijab Nyaman<br />
+              <span class="text-primary-600">Untuk Aktivitas</span><br />
+              Sehari-hari
+            </h1>
+            <p class="text-gray-500 text-base mb-8 max-w-md leading-relaxed">
+              Koleksi pilihan bahan premium dengan warna elegan yang mudah dipadukan untuk setiap momen.
+            </p>
+            <!-- CTA -->
+            <div class="flex items-center gap-3 flex-wrap mb-8">
+              <NuxtLink to="/products" class="inline-flex items-center px-7 py-3 bg-primary-700 text-white font-semibold rounded-xl hover:bg-primary-800 transition-colors shadow-sm">
+                Belanja Sekarang
+              </NuxtLink>
+              <NuxtLink to="/products" class="inline-flex items-center px-7 py-3 border border-primary-300 text-primary-700 font-semibold rounded-xl hover:bg-primary-50 transition-colors">
+                Lihat Koleksi
+              </NuxtLink>
+            </div>
+            <!-- Color Swatches -->
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-gray-400 mr-1">Pilihan Warna:</span>
+              <button v-for="c in heroColors" :key="c" :style="`background:${c}`" class="w-6 h-6 rounded-full border-2 border-white shadow-sm ring-1 ring-gray-200 hover:scale-110 transition-transform" />
+            </div>
+          </div>
+
+          <!-- Hero Image -->
+          <div class="relative order-1 lg:order-2 flex items-end justify-center pt-8 lg:pt-0">
+            <div class="w-full h-64 lg:h-full lg:absolute lg:inset-0 bg-gradient-to-br from-primary-100 via-cream to-primary-50 flex items-center justify-center rounded-b-none lg:rounded-l-[48px] overflow-hidden">
+              <!-- Decorative rings -->
+              <div class="absolute -top-8 -right-8 w-64 h-64 rounded-full bg-primary-100 opacity-60" />
+              <div class="absolute -bottom-12 left-8 w-48 h-48 rounded-full bg-primary-200 opacity-40" />
+              <div class="relative z-10 text-center px-8">
+                <div class="text-8xl mb-2">🧕</div>
+                <p class="text-primary-700 font-semibold text-sm">Premium Hijab Collection</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── FEATURES STRIP ───────────────────────────────── -->
+    <section class="bg-white border-y border-sand">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div v-for="feat in features" :key="feat.label" class="flex items-center gap-3 py-1">
+            <span class="text-2xl">{{ feat.icon }}</span>
+            <div>
+              <p class="text-xs font-semibold text-gray-800">{{ feat.label }}</p>
+              <p class="text-[11px] text-gray-400">{{ feat.desc }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── KATEGORI PILIHAN ──────────────────────────────── -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-xl font-bold text-gray-900">Kategori Pilihan</h2>
+        <NuxtLink to="/products" class="text-sm text-primary-600 font-medium hover:text-primary-700">Lihat Semua →</NuxtLink>
+      </div>
+      <div class="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+        <NuxtLink
+          v-for="cat in categories"
+          :key="cat.slug"
+          :to="`/categories/${cat.slug}`"
+          class="flex-shrink-0 flex flex-col items-center gap-2 group cursor-pointer"
+        >
+          <div class="w-20 h-20 rounded-full overflow-hidden bg-primary-100 group-hover:ring-2 group-hover:ring-primary-400 transition-all">
+            <div class="w-full h-full flex items-center justify-center text-3xl bg-gradient-to-br from-primary-50 to-primary-200">
+              {{ cat.emoji }}
+            </div>
+          </div>
+          <span class="text-xs font-medium text-gray-700 group-hover:text-primary-700">{{ cat.label }}</span>
+        </NuxtLink>
+      </div>
+    </section>
+
+    <!-- ─── BEST SELLER ──────────────────────────────────── -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-xl font-bold text-gray-900">Best Seller</h2>
+        <NuxtLink to="/products?sort_by=sold&sort_order=desc" class="text-sm text-primary-600 font-medium hover:text-primary-700">Lihat Semua →</NuxtLink>
+      </div>
+
+      <div v-if="pendingBestSeller" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <div v-for="i in 5" :key="i" class="bg-white rounded-2xl aspect-[3/4] animate-pulse" />
+      </div>
+      <div v-else class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <ProductCard v-for="p in bestSellers" :key="p.id" :product="p" badge="BEST SELLER" />
+      </div>
+    </section>
+
+    <!-- ─── NEW ARRIVAL ──────────────────────────────────── -->
+    <section class="bg-cream-dark py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-bold text-gray-900">New Arrival</h2>
+          <NuxtLink to="/products?sort_by=created_at&sort_order=desc" class="text-sm text-primary-600 font-medium hover:text-primary-700">Lihat Semua →</NuxtLink>
+        </div>
+        <div v-if="pendingNew" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          <div v-for="i in 5" :key="i" class="bg-white rounded-2xl aspect-[3/4] animate-pulse" />
+        </div>
+        <div v-else class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          <ProductCard v-for="p in newArrivals" :key="p.id" :product="p" badge="NEW ARRIVAL" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── WARNA FAVORIT ────────────────────────────────── -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <h2 class="text-xl font-bold text-gray-900 mb-6">Warna Favorit</h2>
+      <div class="flex flex-wrap gap-3">
+        <NuxtLink
+          v-for="warna in warnaFavorit"
+          :key="warna.nama"
+          :to="`/products?search=${warna.nama.toLowerCase()}`"
+          class="flex flex-col items-center gap-1.5 group"
+        >
+          <div
+            class="w-14 h-14 rounded-full border-4 border-white shadow-md group-hover:scale-105 transition-transform ring-1 ring-gray-200"
+            :style="`background:${warna.hex}`"
+          />
+          <span class="text-xs text-gray-600 group-hover:text-primary-700">{{ warna.nama }}</span>
+        </NuxtLink>
+      </div>
+    </section>
+
+    <!-- ─── JOIN MEMBER BANNER ───────────────────────────── -->
+    <section class="bg-primary-700 text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+        <h2 class="text-2xl lg:text-3xl font-bold mb-2">Join Member ArafaHijab</h2>
+        <p class="text-primary-200 mb-6">Dapatkan voucher & promo eksklusif setiap minggu</p>
+        <NuxtLink
+          v-if="!isAuthenticated"
+          to="/auth/register"
+          class="inline-flex items-center px-8 py-3 bg-white text-primary-700 font-semibold rounded-xl hover:bg-primary-50 transition-colors shadow-lg"
+        >
+          Daftar Sekarang
+        </NuxtLink>
+        <p v-else class="text-primary-200 font-medium">Selamat datang, {{ authStore.user?.name }}! 🎉</p>
+      </div>
+    </section>
+
+  </NuxtLayout>
+</template>
+
+<script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import type { ProductListItem } from '~/types/api'
+
+useSeoMeta({
+  title: 'ArafaHijab - Hijab Premium untuk Muslimah Modern',
+  ogTitle: 'ArafaHijab',
+  description: 'Belanja hijab premium online. Koleksi terlengkap dengan harga terjangkau.',
+  ogDescription: 'Belanja hijab premium online. Koleksi terlengkap dengan harga terjangkau.',
+})
+
+const authStore = useAuthStore()
+const { isAuthenticated } = storeToRefs(authStore)
+
+const heroColors = ['#FAE6CC','#D4B896','#B8977E','#8C6E58','#5C4030','#E8D5C4','#C2A68A','#9B7B66']
+
+const features = [
+  { icon: '🧵', label: 'Bahan Premium', desc: 'Nyaman & Adem' },
+  { icon: '✂️', label: 'Jahitan Rapi', desc: 'Rapi & Kuat' },
+  { icon: '🚚', label: 'Pengiriman Cepat', desc: 'Sampai 1-2 Hari' },
+  { icon: '⭐', label: 'Ribuan Customer', desc: 'Puas & Repeat Order' },
+]
+
+const categories = [
+  { slug: 'pashmina', label: 'Pashmina', emoji: '🧣' },
+  { slug: 'segi-empat', label: 'Segi Empat', emoji: '🪡' },
+  { slug: 'bergo', label: 'Bergo', emoji: '👒' },
+  { slug: 'instan', label: 'Instan', emoji: '💫' },
+  { slug: 'inner', label: 'Inner', emoji: '🎀' },
+  { slug: 'aksesori', label: 'Aksesori', emoji: '💍' },
+]
+
+const warnaFavorit = [
+  { nama: 'Cream', hex: '#F5E6C8' },
+  { nama: 'Latte', hex: '#C9A87C' },
+  { nama: 'Dusty Pink', hex: '#E8B4A0' },
+  { nama: 'Sage', hex: '#A8C5A0' },
+  { nama: 'Navy', hex: '#2C3E6B' },
+  { nama: 'Black', hex: '#1A1A1A' },
+  { nama: 'Lilac', hex: '#C4A8D4' },
+  { nama: 'Mocca', hex: '#7A5C3E' },
+]
+
+const { data: bestSellers, pending: pendingBestSeller } = await useAsyncData<ProductListItem[]>(
+  'home-bestseller',
+  () =>
+    $fetch<{ message: string; data: { data: { data: ProductListItem[] } } }>(
+      '/api/products?per_page=5&sort_by=sold&sort_order=desc'
+    ).then((r) => r.data.data.data),
+  { server: true }
+)
+
+const { data: newArrivals, pending: pendingNew } = await useAsyncData<ProductListItem[]>(
+  'home-newarrivals',
+  () =>
+    $fetch<{ message: string; data: { data: { data: ProductListItem[] } } }>(
+      '/api/products?per_page=5&sort_by=created_at&sort_order=desc'
+    ).then((r) => r.data.data.data),
+  { server: true }
+)
+</script>
