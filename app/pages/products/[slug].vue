@@ -13,14 +13,49 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
         <!-- ─── Gallery ─── -->
-        <div>
-          <div class="aspect-square rounded-3xl overflow-hidden bg-cream-dark mb-3">
+        <div class="lg:sticky lg:top-24 lg:self-start">
+          <!-- Main image: swipe + arrows + dots -->
+          <div
+            ref="galleryRef"
+            class="w-full max-h-[600px] aspect-[1/1] rounded-3xl overflow-hidden bg-white mb-3 relative select-none flex items-center justify-center border border-sand"
+          >
             <img
               :src="activeImage"
               :alt="product.name"
-              class="w-full h-full object-cover transition-opacity duration-300"
+              class="h-full w-auto object-contain transition-opacity duration-300"
             />
+            <!-- Prev arrow -->
+            <button
+              v-if="activeImageIdx > 0"
+              type="button"
+              @click="activeImageIdx--"
+              class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 hover:bg-white shadow-sm flex items-center justify-center transition"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <!-- Next arrow -->
+            <button
+              v-if="activeImageIdx < allImages.length - 1"
+              type="button"
+              @click="activeImageIdx++"
+              class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 hover:bg-white shadow-sm flex items-center justify-center transition"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+            <!-- Dot indicators -->
+            <div v-if="allImages.length > 1" class="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 pointer-events-none">
+              <span
+                v-for="(_, i) in allImages"
+                :key="i"
+                :class="['h-1.5 rounded-full bg-white transition-all', i === activeImageIdx ? 'w-4 opacity-100' : 'w-1.5 opacity-50']"
+              />
+            </div>
           </div>
+          <!-- Thumbnail strip -->
           <div class="flex gap-2 overflow-x-auto pb-1">
             <button
               v-for="(img, idx) in allImages"
@@ -355,9 +390,25 @@ useSeoMeta({
 const activeImageIdx = ref(0)
 const allImages = computed(() => {
   if (!product.value) return []
-  return [product.value.thumbnail, ...(product.value.images ?? [])].filter(Boolean)
+  const seen = new Set<string>()
+  const result: string[] = []
+  for (const img of [product.value.thumbnail, ...(product.value.images ?? [])]) {
+    if (img && !seen.has(img)) { seen.add(img); result.push(img) }
+  }
+  for (const sku of product.value.skus ?? []) {
+    if (sku.image && !seen.has(sku.image)) { seen.add(sku.image); result.push(sku.image) }
+  }
+  return result
 })
 const activeImage = computed(() => allImages.value[activeImageIdx.value] ?? '')
+
+const galleryRef = ref<HTMLElement | null>(null)
+useSwipe(galleryRef, {
+  onSwipeEnd(_e, direction) {
+    if (direction === 'left') activeImageIdx.value = Math.min(allImages.value.length - 1, activeImageIdx.value + 1)
+    else if (direction === 'right') activeImageIdx.value = Math.max(0, activeImageIdx.value - 1)
+  },
+})
 
 // ─── Variant selection ────────────────────────────────────────────────────────
 const pickedVariants = reactive<Record<string, string>>({})
