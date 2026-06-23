@@ -97,7 +97,9 @@
         </div>
 
         <div v-else-if="!groups.length" class="text-center py-16 bg-white rounded-2xl shadow-card">
-          <div class="text-5xl mb-3">🚚</div>
+          <div class="w-16 h-16 rounded-full bg-cream-dark flex items-center justify-center mx-auto mb-3">
+            <Truck class="w-8 h-8 text-primary-400" />
+          </div>
           <p class="text-gray-500 font-medium">Tidak ada layanan pengiriman tersedia</p>
           <p class="text-sm text-gray-400 mt-1">Coba ubah alamat atau berat paket.</p>
         </div>
@@ -132,6 +134,7 @@
 </template>
 
 <script setup lang="ts">
+import { Truck } from 'lucide-vue-next'
 import type { ShippingGroup } from '~/types/api'
 import { formatRupiah } from '~/utils/format'
 import LoadingSpinner from '~/components/ui/LoadingSpinner.vue'

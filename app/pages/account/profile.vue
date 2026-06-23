@@ -9,7 +9,9 @@
         <div class="md:col-span-1">
           <div class="bg-white rounded-3xl shadow-card p-4 space-y-1">
             <div class="text-center pb-4 border-b border-sand">
-              <div class="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center text-2xl mx-auto mb-2">👤</div>
+              <div class="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-2">
+                <UserRound class="w-8 h-8 text-primary-600" />
+              </div>
               <p class="font-semibold text-sm text-gray-900 truncate">{{ authStore.user?.name }}</p>
               <p class="text-xs text-gray-400 truncate">{{ authStore.user?.customer_category?.name }}</p>
             </div>
@@ -44,13 +46,13 @@
               <div class="bg-cream rounded-2xl px-4 py-3 text-sm text-gray-600">
                 Bergabung sejak: <strong>{{ authStore.user?.date_joined ? formatDate(authStore.user.date_joined) : '-' }}</strong>
               </div>
-              <p v-if="successMsg" class="text-sm text-green-600 font-medium">✓ {{ successMsg }}</p>
+              <p v-if="successMsg" class="flex items-center gap-1.5 text-sm text-green-600 font-medium"><Check class="w-4 h-4" /> {{ successMsg }}</p>
               <p v-if="globalError" class="text-sm text-red-600">{{ globalError }}</p>
               <div class="flex items-center gap-3 pt-2">
                 <button type="submit" :disabled="saving" class="px-7 py-3 bg-primary-700 text-white font-bold rounded-xl hover:bg-primary-800 disabled:opacity-60 transition">
                   {{ saving ? 'Menyimpan...' : 'Simpan Perubahan' }}
                 </button>
-                <NuxtLink to="/account/change-password" class="text-sm text-gray-500 hover:text-primary-600">Ganti Password →</NuxtLink>
+                <NuxtLink to="/account/change-password" class="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-primary-600">Ganti Password <ArrowRight class="w-4 h-4" /></NuxtLink>
               </div>
             </form>
           </div>
@@ -61,6 +63,7 @@
 </template>
 
 <script setup lang="ts">
+import { UserRound, Check, ArrowRight } from 'lucide-vue-next'
 import { formatDate } from '~/utils/format'
 definePageMeta({ middleware: 'auth' })
 useSeoMeta({ title: 'Profil Saya' })

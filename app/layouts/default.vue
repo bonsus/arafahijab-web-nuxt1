@@ -12,9 +12,7 @@
             class="md:hidden w-9 h-9 -ml-1 flex items-center justify-center text-gray-600 hover:text-primary-700 hover:bg-primary-50 rounded-lg transition-colors"
             aria-label="Buka menu"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+            <Menu class="w-6 h-6" />
           </button>
 
           <!-- Logo -->
@@ -225,7 +223,7 @@
                   <span class="w-8 h-8 rounded-full bg-primary-700 text-white text-sm font-bold flex items-center justify-center leading-none">A</span>
                   <span class="text-lg font-semibold text-gray-900">ArafaHijab</span>
                 </NuxtLink>
-                <button @click="showMobileMenu = false" class="w-8 h-8 flex items-center justify-center rounded-full bg-cream text-gray-500" aria-label="Tutup menu">✕</button>
+                <button @click="showMobileMenu = false" class="w-8 h-8 flex items-center justify-center rounded-full bg-cream text-gray-500" aria-label="Tutup menu"><X class="w-4 h-4" /></button>
               </div>
               <!-- Nav items -->
               <nav class="flex-1 overflow-y-auto py-2">
@@ -250,6 +248,7 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import { Menu, X } from 'lucide-vue-next'
 
 const authStore = useAuthStore()
 const cartStore = useCartStore()
@@ -265,8 +264,7 @@ const searchInput = ref<HTMLInputElement | null>(null)
 
 const navItems = [
   { to: '/', label: 'Beranda' },
-  { to: '/products', label: 'Produk' },
-  { to: '/products?promotion_discount=true', label: 'Promo' },
+  { to: '/products', label: 'Produk' }, 
   { to: '/stock', label: 'Stok' },
   { to: '/check-ongkir', label: 'Cek Ongkir' },
 ]

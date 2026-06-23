@@ -58,13 +58,13 @@
           <div v-if="hasActiveFilters" class="flex flex-wrap gap-2 mb-4">
             <span v-if="filters.search" class="inline-flex items-center gap-1 bg-primary-100 text-primary-700 text-xs font-medium px-3 py-1 rounded-full">
               "{{ filters.search }}"
-              <button @click="filters.search = ''" class="hover:text-primary-900">✕</button>
+              <button @click="filters.search = ''" class="hover:text-primary-900"><X class="w-3 h-3" /></button>
             </span>
             <span v-if="filters.free_shipping" class="inline-flex items-center gap-1 bg-green-100 text-green-700 text-xs font-medium px-3 py-1 rounded-full">
-              Gratis Ongkir <button @click="filters.free_shipping = false" class="hover:text-green-900">✕</button>
+              Gratis Ongkir <button @click="filters.free_shipping = false" class="hover:text-green-900"><X class="w-3 h-3" /></button>
             </span>
             <span v-if="filters.promotion_discount" class="inline-flex items-center gap-1 bg-red-100 text-red-600 text-xs font-medium px-3 py-1 rounded-full">
-              Sedang Promo <button @click="filters.promotion_discount = false" class="hover:text-red-800">✕</button>
+              Sedang Promo <button @click="filters.promotion_discount = false" class="hover:text-red-800"><X class="w-3 h-3" /></button>
             </span>
           </div>
 
@@ -75,7 +75,9 @@
 
           <!-- Empty -->
           <div v-else-if="!items.length" class="text-center py-20">
-            <div class="text-6xl mb-4">🔍</div>
+            <div class="w-20 h-20 rounded-full bg-cream-dark flex items-center justify-center mx-auto mb-4">
+              <SearchX class="w-9 h-9 text-primary-400" />
+            </div>
             <p class="text-gray-500 text-lg font-medium">Produk tidak ditemukan</p>
             <p class="text-gray-400 text-sm mt-1 mb-4">Coba ubah filter atau kata pencarian</p>
             <button @click="resetFilters" class="text-primary-600 text-sm hover:underline font-medium">Reset Filter</button>
@@ -108,7 +110,7 @@
           <div class="relative bg-white w-full max-h-[85vh] overflow-y-auto rounded-t-3xl p-5 z-10">
             <div class="flex items-center justify-between mb-4">
               <h3 class="font-bold text-gray-900">Filter Produk</h3>
-              <button @click="showMobileFilter = false" class="w-8 h-8 flex items-center justify-center rounded-full bg-cream text-gray-500">✕</button>
+              <button @click="showMobileFilter = false" class="w-8 h-8 flex items-center justify-center rounded-full bg-cream text-gray-500"><X class="w-4 h-4" /></button>
             </div>
             <ProductFilter
               :model-value="filters"
@@ -126,6 +128,7 @@
 </template>
 
 <script setup lang="ts">
+import { X, SearchX } from 'lucide-vue-next'
 import type { PaginatedData, ProductListItem, FilterData } from '~/types/api'
 import LoadingSpinner from '~/components/ui/LoadingSpinner.vue'
 

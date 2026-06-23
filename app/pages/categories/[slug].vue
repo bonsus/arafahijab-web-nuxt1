@@ -147,7 +147,9 @@
 
           <!-- Empty -->
           <div v-else-if="!items.length" class="text-center py-20">
-            <div class="text-6xl mb-4">🔍</div>
+            <div class="w-20 h-20 rounded-full bg-cream-dark flex items-center justify-center mx-auto mb-4">
+              <SearchX class="w-9 h-9 text-primary-400" />
+            </div>
             <p class="text-gray-500 text-lg font-medium">Produk tidak ditemukan</p>
             <p class="text-gray-400 text-sm mt-1 mb-4">Coba ubah filter atau kata pencarian</p>
             <button @click="resetFilters" class="text-primary-600 text-sm hover:underline font-medium">Reset Filter</button>
@@ -240,6 +242,7 @@
 </template>
 
 <script setup lang="ts">
+import { SearchX } from 'lucide-vue-next'
 import type { PaginatedData, ProductListItem, FilterData, ProductCategory } from '~/types/api'
 import LoadingSpinner from '~/components/ui/LoadingSpinner.vue'
 

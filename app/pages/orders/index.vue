@@ -22,9 +22,11 @@
       <LoadingSpinner v-if="pending" />
 
       <div v-else-if="!result?.data?.length" class="text-center py-20">
-        <div class="text-6xl mb-4">📦</div>
+        <div class="w-20 h-20 rounded-full bg-cream-dark flex items-center justify-center mx-auto mb-4">
+          <PackageOpen class="w-9 h-9 text-primary-400" />
+        </div>
         <p class="text-gray-500 text-lg font-medium">Belum ada pesanan</p>
-        <NuxtLink to="/products" class="mt-4 inline-block text-primary-600 hover:underline font-medium">Belanja Sekarang →</NuxtLink>
+        <NuxtLink to="/products" class="mt-4 inline-flex items-center gap-1 text-primary-600 hover:underline font-medium">Belanja Sekarang <ArrowRight class="w-4 h-4" /></NuxtLink>
       </div>
 
       <div v-else class="space-y-3">
@@ -36,6 +38,7 @@
 </template>
 
 <script setup lang="ts">
+import { PackageOpen, ArrowRight } from 'lucide-vue-next'
 import type { PaginatedData, Order } from '~/types/api'
 import { ORDER_STATUS_LABEL, PAYMENT_STATUS_LABEL } from '~/utils/format'
 import LoadingSpinner from '~/components/ui/LoadingSpinner.vue'

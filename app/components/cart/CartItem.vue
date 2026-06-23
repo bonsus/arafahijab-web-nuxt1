@@ -20,7 +20,7 @@
     <NuxtLink :to="`/products/${item.product_slug}`" class="flex-shrink-0">
       <div class="w-20 h-20 rounded-xl bg-cream overflow-hidden">
         <img v-if="item.image" :src="item.image" :alt="item.product_name" class="w-full h-full object-cover" />
-        <div v-else class="w-full h-full flex items-center justify-center text-2xl">🧕</div>
+        <div v-else class="w-full h-full flex items-center justify-center text-primary-300"><Shirt class="w-7 h-7" /></div>
       </div>
     </NuxtLink>
 
@@ -56,7 +56,7 @@
         class="mt-2 bg-pink-50 border border-pink-100 rounded-xl p-2"
       >
         <p class="text-[11px] font-semibold text-pink-700 flex items-center gap-1">
-          <span>🎁</span> {{ item.promotion_free_product.name }}
+          <Gift class="w-3.5 h-3.5" /> {{ item.promotion_free_product.name }}
         </p>
         <div
           v-for="freeItem in item.promotion_free_product.free_items"
@@ -65,7 +65,7 @@
         >
           <div class="w-8 h-8 rounded-lg bg-white border border-pink-100 overflow-hidden flex-shrink-0">
             <img v-if="freeItem.image" :src="freeItem.image" :alt="freeItem.product_name" class="w-full h-full object-cover" />
-            <div v-else class="w-full h-full flex items-center justify-center text-sm">🧕</div>
+            <div v-else class="w-full h-full flex items-center justify-center text-pink-300"><Shirt class="w-4 h-4" /></div>
           </div>
           <div class="flex-1 min-w-0">
             <p class="text-[11px] font-medium text-gray-700 truncate">{{ freeItem.product_name }}</p>
@@ -118,6 +118,7 @@
 </template>
 
 <script setup lang="ts">
+import { Shirt, Gift } from 'lucide-vue-next'
 import type { CartItem, FreeItem } from '~/types/api'
 
 const props = defineProps<{ item: CartItem; checked: boolean }>()

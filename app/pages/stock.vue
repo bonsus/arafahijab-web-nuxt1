@@ -70,12 +70,16 @@
       <LoadingSpinner v-if="isInitialLoading" />
 
       <div v-else-if="!items.length" class="text-center py-20">
-        <div class="text-6xl mb-4">📦</div>
+        <div class="w-20 h-20 rounded-full bg-cream-dark flex items-center justify-center mx-auto mb-4">
+          <PackageOpen class="w-9 h-9 text-primary-400" />
+        </div>
         <p class="text-gray-500 text-lg font-medium">Produk tidak ditemukan</p>
       </div>
 
       <div v-else-if="!visibleProducts.length" class="text-center py-20">
-        <div class="text-6xl mb-4">📦</div>
+        <div class="w-20 h-20 rounded-full bg-cream-dark flex items-center justify-center mx-auto mb-4">
+          <PackageOpen class="w-9 h-9 text-primary-400" />
+        </div>
         <p class="text-gray-500 text-lg font-medium">Tidak ada produk sesuai filter stok</p>
       </div>
 
@@ -179,6 +183,7 @@
 <script setup lang="ts">
 import type { PaginatedData, ProductListItem, Sku, FilterData, ProductCategory } from '~/types/api'
 import { formatRupiah } from '~/utils/format'
+import { PackageOpen } from 'lucide-vue-next'
 import LoadingSpinner from '~/components/ui/LoadingSpinner.vue'
 
 useSeoMeta({ title: 'Stok Produk' })

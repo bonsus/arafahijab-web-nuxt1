@@ -14,7 +14,9 @@
 
       <!-- Empty -->
       <div v-else-if="!cartStore.items.length" class="text-center py-20">
-        <div class="w-24 h-24 rounded-full bg-cream-dark flex items-center justify-center mx-auto mb-5 text-5xl">🛍️</div>
+        <div class="w-24 h-24 rounded-full bg-cream-dark flex items-center justify-center mx-auto mb-5">
+          <ShoppingBag class="w-10 h-10 text-primary-400" />
+        </div>
         <h2 class="text-lg font-bold text-gray-900 mb-2">Keranjang Kosong</h2>
         <p class="text-gray-500 text-sm mb-6">Yuk, temukan hijab favoritmu!</p>
         <NuxtLink to="/products" class="inline-flex items-center px-7 py-3 bg-primary-700 text-white font-semibold rounded-xl hover:bg-primary-800 transition">
@@ -63,7 +65,9 @@
 
           <!-- Voucher -->
           <div class="bg-white rounded-3xl shadow-card p-4 sm:p-5">
-            <h3 class="text-sm font-semibold text-gray-700 mb-3">🎟️ Kode Voucher</h3>
+            <h3 class="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3">
+              <Ticket class="w-4 h-4 text-primary-600" /> Kode Voucher
+            </h3>
             <div class="flex gap-2">
               <input
                 v-model="voucherCode"
@@ -151,6 +155,7 @@
 </template>
 
 <script setup lang="ts">
+import { ShoppingBag, Ticket } from 'lucide-vue-next'
 import { formatRupiah } from '~/utils/format'
 
 definePageMeta({ middleware: 'auth' })

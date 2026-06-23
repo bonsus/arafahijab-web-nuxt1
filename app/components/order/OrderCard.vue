@@ -19,7 +19,7 @@
         class="w-12 h-12 rounded-lg bg-cream overflow-hidden flex-shrink-0"
       >
         <img v-if="item.image" :src="item.image" :alt="item.product_name" class="w-full h-full object-cover" />
-        <div v-else class="w-full h-full flex items-center justify-center text-lg">🧕</div>
+        <div v-else class="w-full h-full flex items-center justify-center text-primary-300"><Shirt class="w-5 h-5" /></div>
       </div>
       <div v-if="(order.items?.length || 0) > 3" class="w-12 h-12 rounded-lg bg-sand flex items-center justify-center text-xs text-gray-600 font-medium flex-shrink-0">
         +{{ (order.items?.length || 0) - 3 }}
@@ -40,6 +40,7 @@
 </template>
 
 <script setup lang="ts">
+import { Shirt } from 'lucide-vue-next'
 import type { Order } from '~/types/api'
 const props = defineProps<{ order: Order }>()
 const { formatRupiah, formatDate, getOrderStatusLabel, getOrderStatusColor } = useFormatters()

@@ -6,7 +6,9 @@
       <LoadingSpinner v-if="loading" />
 
       <div v-else-if="!wishlistStore.items.length" class="text-center py-20">
-        <div class="w-24 h-24 rounded-full bg-cream-dark flex items-center justify-center mx-auto mb-5 text-5xl">♥️</div>
+        <div class="w-24 h-24 rounded-full bg-cream-dark flex items-center justify-center mx-auto mb-5">
+          <Heart class="w-10 h-10 text-primary-400" />
+        </div>
         <h2 class="text-lg font-bold text-gray-900 mb-2">Wishlist Kosong</h2>
         <p class="text-gray-500 text-sm mb-6">Simpan produk favoritmu di sini!</p>
         <NuxtLink to="/products" class="inline-flex items-center px-7 py-3 bg-primary-700 text-white font-semibold rounded-xl hover:bg-primary-800 transition">
@@ -19,7 +21,7 @@
           <NuxtLink :to="`/products/${item.product_slug}`">
             <div class="aspect-square bg-cream-dark overflow-hidden">
               <img v-if="item.image" :src="item.image" :alt="item.product_name" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
-              <div v-else class="w-full h-full flex items-center justify-center text-4xl">🧕</div>
+              <div v-else class="w-full h-full flex items-center justify-center text-primary-300"><Shirt class="w-10 h-10" /></div>
             </div>
           </NuxtLink>
           <div class="p-3">
@@ -50,6 +52,7 @@
 </template>
 
 <script setup lang="ts">
+import { Heart, Shirt } from 'lucide-vue-next'
 import type { WishlistItem } from '~/types/api'
 import { formatRupiah } from '~/utils/format'
 definePageMeta({ middleware: 'auth' })

@@ -29,6 +29,10 @@ export default defineNuxtConfig({
     },
   },
 
+  devServer: {
+    port: Number(process.env.PORT) || 3001,
+  },
+
   app: {
     head: {
       titleTemplate: '%s | Arafah Hijab',
