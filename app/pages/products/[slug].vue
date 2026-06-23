@@ -310,8 +310,10 @@
         </div>
         <div class="p-6">
           <div v-if="activeTab === 'Deskripsi'">
-            <p class="text-sm text-gray-500 mb-3">{{ product.short_description }}</p>
-            <div class="text-sm text-gray-600 leading-relaxed whitespace-pre-wrap">{{ product.description }}</div>
+            <!-- <p class="text-sm text-gray-500 mb-3">{{ product.short_description }}</p> -->
+            <div class="text-sm text-gray-600 leading-relaxed whitespace-pre-wrap">
+              <div v-html="product.description" />
+            </div>
           </div>
           <div v-else-if="activeTab === 'Ulasan'" class="text-center py-8 text-gray-400">
             <div class="text-5xl mb-3">⭐</div>
