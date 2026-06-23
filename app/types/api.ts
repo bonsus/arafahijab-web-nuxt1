@@ -369,7 +369,14 @@ export interface Order {
   payment_status: string
   source?: string
   customer: { id: string; name: string; phone: string }
-  dropship: { name: string; phone: string } | null
+  dropship: {
+    id?: string
+    type: 'regular' | 'marketplace'
+    source?: string
+    name: string
+    phone: string
+    file?: string
+  } | null
   address: OrderAddress
   shipment: Shipment
   qty: number
@@ -387,12 +394,39 @@ export interface Order {
   xendit: XenditPayment | null
 }
 
+// ─── Dropship ─────────────────────────────────────────────────────────────────
+
+export interface DropshipCourier {
+  courier_code: string
+  courier_name: string
+}
+
+export interface DropshipState {
+  enabled: boolean
+  type: 'regular' | 'marketplace'
+  name: string
+  phone: string
+  source: string
+  resi: string
+  courierCode: string
+  courierName: string
+  file: File | null
+}
+
 // ─── Checkout ─────────────────────────────────────────────────────────────────
 
 export interface CheckoutPayload {
   address_id?: string
-  dropship: { name: string; phone: string } | null
-  shipping: {
+  dropship: {
+    type: 'regular' | 'marketplace'
+    name?: string
+    phone?: string
+    source?: string
+    resi?: string
+    courier_code?: string
+    courier_name?: string
+  } | null
+  shipping?: {
     courier_code: string
     courier_name: string
     service_code: string
@@ -406,8 +440,8 @@ export interface CheckoutPayload {
     name: string
   }
   items: { sku_id: string; qty: number }[]
-  promotion_checkout_code: string
-  promotion_shipping_code: string
+  promotion_checkout_code?: string
+  promotion_shipping_code?: string
 }
 
 export interface PaymentConfirmationPayload {

@@ -5,6 +5,12 @@
       <div>
         <p class="text-xs text-gray-500">{{ formatDate(order.date_created) }}</p>
         <p class="text-sm font-semibold text-gray-900 mt-0.5">{{ order.no }}</p>
+        <!-- Dropship badge -->
+        <span
+          v-if="order.dropship"
+          :class="order.dropship.type === 'marketplace' ? 'bg-purple-100 text-purple-700' : 'bg-amber-100 text-amber-700'"
+          class="inline-block text-[10px] font-bold px-1.5 py-0.5 rounded-full mt-1"
+        >Dropship {{ order.dropship.type === 'marketplace' ? 'Marketplace' : 'Regular' }}</span>
       </div>
       <span :class="statusClass" class="text-xs font-semibold px-2.5 py-1 rounded-full">
         {{ statusLabel }}

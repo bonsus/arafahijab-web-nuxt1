@@ -69,6 +69,42 @@
         </div>
       </div>
 
+      <!-- Dropship Info -->
+      <div v-if="order.dropship" class="bg-white rounded-3xl shadow-card p-5 mb-4">
+        <div class="flex items-center gap-2 mb-3">
+          <h2 class="font-bold text-gray-900">Informasi Dropship</h2>
+          <span
+            :class="order.dropship.type === 'marketplace' ? 'bg-purple-100 text-purple-700' : 'bg-amber-100 text-amber-700'"
+            class="text-xs font-bold px-2 py-0.5 rounded-full"
+          >{{ order.dropship.type === 'marketplace' ? 'Marketplace' : 'Regular' }}</span>
+        </div>
+
+        <!-- Regular -->
+        <div v-if="order.dropship.type === 'regular'" class="text-sm text-gray-700 space-y-1">
+          <p>Nama Pengirim: <strong>{{ order.dropship.name }}</strong></p>
+          <p>No. HP: <strong>{{ order.dropship.phone }}</strong></p>
+        </div>
+
+        <!-- Marketplace -->
+        <div v-else class="text-sm text-gray-700 space-y-2">
+          <p v-if="order.dropship.source">Marketplace:
+            <strong class="capitalize">{{ order.dropship.source }}</strong>
+          </p>
+          <a
+            v-if="order.dropship.file"
+            :href="order.dropship.file"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 text-primary-700 hover:text-primary-800 font-medium transition"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Lihat Label Pengiriman
+          </a>
+        </div>
+      </div>
+
       <!-- Delivery Address -->
       <div class="bg-white rounded-3xl shadow-card p-5 mb-4">
         <h2 class="font-bold text-gray-900 mb-3">Alamat Pengiriman</h2>
