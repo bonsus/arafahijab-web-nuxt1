@@ -293,7 +293,7 @@ function openForm(addr?: Address) {
   }
   // load provinces lazily on first open
   if (!provinces.value.length) {
-    $fetch<{ message: string; data: { provinces: string[] } }>('/api/data/provinces')
+    $fetch<{ message: string; data: { provinces: string[] } }>('/api/data/provinces', { headers: authHeaders() })
       .then((r) => { provinces.value = r.data.provinces })
   }
   showForm.value = true

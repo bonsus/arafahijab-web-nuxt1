@@ -141,6 +141,9 @@ const route = useRoute()
 const router = useRouter()
 const showMobileFilter = ref(false)
 
+const token = useCookie('arafahijab_token')
+const authHeaders = () => token.value ? { Authorization: `Bearer ${token.value}` } : {}
+
 interface FilterState {
   search: string
   price_min: string
@@ -194,7 +197,7 @@ watch(filterKey, () => { filters.page = 1 })
 
 const { data: filterData } = await useAsyncData<FilterData>(
   'filter-data',
-  () => $fetch<{ message: string; data: FilterData }>('/api/data/filter').then((r) => r.data),
+  () => $fetch<{ message: string; data: FilterData }>('/api/data/filter', { headers: authHeaders() }).then((r) => r.data),
   { server: true }
 )
 
@@ -212,7 +215,8 @@ const { data: result, pending } = await useAsyncData<PaginatedData<ProductListIt
     params.set('page', String(filters.page))
     params.set('per_page', '20')
     return $fetch<{ message: string; data: { data: PaginatedData<ProductListItem> } }>(
-      `/api/products?${params}`
+      `/api/products?${params}`,
+      { headers: authHeaders() }
     ).then((r) => r.data.data)
   },
   { watch: [queryKey], server: true }

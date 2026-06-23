@@ -480,7 +480,7 @@ onMounted(async () => {
   // Load addresses, payment methods, and dropship couriers in parallel
   await Promise.all([
     loadAddresses(),
-    $fetch<{ message: string; data: { data: PaymentMethod[] } }>('/api/payment-methods')
+    $fetch<{ message: string; data: { data: PaymentMethod[] } }>('/api/payment-methods', { headers: authHeaders() })
       .then((pmRes) => { paymentMethods.value = pmRes.data.data ?? [] })
       .finally(() => { loadingPayments.value = false }),
     loadDropshipCouriers(),
@@ -499,6 +499,7 @@ watch(selectedAddress, async (addr) => {
   try {
     const res = await $fetch<{ message: string; data: { data: ShippingGroup[] } }>('/api/data/shipping-fee', {
       method: 'POST',
+      headers: authHeaders(),
       body: {
         province: addr.province,
         city: addr.city,

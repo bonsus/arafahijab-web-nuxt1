@@ -373,7 +373,8 @@ const { data: relatedProducts } = await useAsyncData<PaginatedData<ProductListIt
   () => `related-${slug.value}`,
   () =>
     $fetch<{ message: string; data: PaginatedData<ProductListItem> }>(
-      `/api/products/${slug.value}/related?per_page=5`
+      `/api/products/${slug.value}/related?per_page=5`,
+      { headers: authStore.token ? { Authorization: `Bearer ${authStore.token}` } : {} }
     ).then((r) => r.data),
   { server: true }
 )

@@ -191,7 +191,9 @@ onUnmounted(() => { if (previewUrl.value) URL.revokeObjectURL(previewUrl.value) 
 // Load bank list
 onMounted(async () => {
   try {
-    const res = await $fetch<{ message: string; data: { data: Bank[] } }>('/api/data/banks')
+    const res = await $fetch<{ message: string; data: { data: Bank[] } }>('/api/data/banks', {
+      headers: { Authorization: `Bearer ${authStore.token}` },
+    })
     banks.value = res.data.data ?? []
   } finally {
     loadingBanks.value = false

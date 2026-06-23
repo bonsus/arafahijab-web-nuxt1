@@ -251,10 +251,13 @@ const router = useRouter()
 const slug = computed(() => route.params.slug as string)
 const showMobileFilter = ref(false)
 
+const token = useCookie('arafahijab_token')
+const authHeaders = () => token.value ? { Authorization: `Bearer ${token.value}` } : {}
+
 // Load categories to find current + sub-categories
 const { data: filterData } = await useAsyncData<FilterData>(
   'filter-data-category',
-  () => $fetch<{ message: string; data: FilterData }>('/api/data/filter').then((r) => r.data),
+  () => $fetch<{ message: string; data: FilterData }>('/api/data/filter', { headers: authHeaders() }).then((r) => r.data),
   { server: true }
 )
 
@@ -345,7 +348,8 @@ const { data: result, pending } = await useAsyncData<PaginatedData<ProductListIt
     params.set('page', String(filters.page))
     params.set('per_page', '20')
     return $fetch<{ message: string; data: { data: PaginatedData<ProductListItem> } }>(
-      `/api/products?${params}`
+      `/api/products?${params}`,
+      { headers: authHeaders() }
     ).then((r) => r.data.data)
   },
   { watch: [queryKey], server: true }

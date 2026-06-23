@@ -188,6 +188,9 @@ import LoadingSpinner from '~/components/ui/LoadingSpinner.vue'
 
 useSeoMeta({ title: 'Stok Produk' })
 
+const token = useCookie('arafahijab_token')
+const authHeaders = () => token.value ? { Authorization: `Bearer ${token.value}` } : {}
+
 const search = ref('')
 const categoryId = ref('')
 const sortBy = ref('created_at')
@@ -232,7 +235,7 @@ function resetFilters() {
 // ─── Categories for filter ────────────────────────────────────────────────────
 const { data: filterData } = await useAsyncData<FilterData>(
   'stock-filter-data',
-  () => $fetch<{ message: string; data: FilterData }>('/api/data/filter').then((r) => r.data),
+  () => $fetch<{ message: string; data: FilterData }>('/api/data/filter', { headers: authHeaders() }).then((r) => r.data),
   { server: true }
 )
 const categories = computed<ProductCategory[]>(() => filterData.value?.categories ?? [])
@@ -253,7 +256,8 @@ const { data: result, pending } = await useAsyncData<PaginatedData<ProductListIt
     params.set('page', String(page.value))
     params.set('per_page', '20')
     return $fetch<{ message: string; data: { data: PaginatedData<ProductListItem> } }>(
-      `/api/products?${params}`
+      `/api/products?${params}`,
+      { headers: authHeaders() }
     ).then((r) => r.data.data)
   },
   { watch: [queryKey], server: true }
@@ -306,7 +310,8 @@ async function toggle(slug: string) {
   loadingSkus.value = true
   try {
     const res = await $fetch<{ message: string; data: { skus: Sku[] } }>(
-      `/api/products/${slug}/skus`
+      `/api/products/${slug}/skus`,
+      { headers: authHeaders() }
     )
     skus.value = res.data.skus ?? []
   } finally {

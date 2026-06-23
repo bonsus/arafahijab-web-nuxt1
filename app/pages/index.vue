@@ -262,8 +262,9 @@ const warnaFavorit = [
 // Real categories from API
 const { data: categories, pending: pendingCategories } = await useAsyncData<ProductCategory[]>(
   'home-categories',
-  () => $fetch<{ message: string; data: FilterData }>('/api/data/filter')
-    .then((r) => r.data.categories ?? []),
+  () => $fetch<{ message: string; data: FilterData }>('/api/data/filter', {
+    headers: authStore.token ? { Authorization: `Bearer ${authStore.token}` } : {}
+  }).then((r) => r.data.categories ?? []),
   { server: true },
 )
 
@@ -271,7 +272,8 @@ const { data: bestSellers, pending: pendingBestSeller } = await useAsyncData<Pro
   'home-bestseller',
   () =>
     $fetch<{ message: string; data: { data: { data: ProductListItem[] } } }>(
-      '/api/products?per_page=5&sort_by=sold&sort_order=desc'
+      '/api/products?per_page=5&sort_by=sold&sort_order=desc',
+      { headers: authStore.token ? { Authorization: `Bearer ${authStore.token}` } : {} }
     ).then((r) => r.data.data.data),
   { server: true }
 )
@@ -280,7 +282,8 @@ const { data: newArrivals, pending: pendingNew } = await useAsyncData<ProductLis
   'home-newarrivals',
   () =>
     $fetch<{ message: string; data: { data: { data: ProductListItem[] } } }>(
-      '/api/products?per_page=5&sort_by=created_at&sort_order=desc'
+      '/api/products?per_page=5&sort_by=created_at&sort_order=desc',
+      { headers: authStore.token ? { Authorization: `Bearer ${authStore.token}` } : {} }
     ).then((r) => r.data.data.data),
   { server: true }
 )

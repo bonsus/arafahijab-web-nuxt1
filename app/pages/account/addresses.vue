@@ -208,7 +208,7 @@ async function loadAddresses() {
 onMounted(async () => {
   await loadAddresses()
   // Load provinces
-  const res = await $fetch<{ message: string; data: { provinces: string[] } }>('/api/data/provinces')
+  const res = await $fetch<{ message: string; data: { provinces: string[] } }>('/api/data/provinces', { headers: authHeaders() })
   provinces.value = res.data.provinces
 })
 
@@ -221,7 +221,8 @@ async function onProvinceChange() {
   zipcodes.value = []
   if (!addrForm.province) return
   const res = await $fetch<{ message: string; data: { cities: string[] } }>(
-    `/api/data/cities?province=${encodeURIComponent(addrForm.province)}`
+    `/api/data/cities?province=${encodeURIComponent(addrForm.province)}`,
+    { headers: authHeaders() }
   )
   cities.value = res.data.cities
 }
@@ -233,7 +234,8 @@ async function onCityChange() {
   zipcodes.value = []
   if (!addrForm.city) return
   const res = await $fetch<{ message: string; data: { districts: string[] } }>(
-    `/api/data/districts?province=${encodeURIComponent(addrForm.province)}&city=${encodeURIComponent(addrForm.city)}`
+    `/api/data/districts?province=${encodeURIComponent(addrForm.province)}&city=${encodeURIComponent(addrForm.city)}`,
+    { headers: authHeaders() }
   )
   districts.value = res.data.districts
 }
@@ -243,7 +245,8 @@ async function onDistrictChange() {
   zipcodes.value = []
   if (!addrForm.district) return
   const res = await $fetch<{ message: string; data: { zipcodes: string[] } }>(
-    `/api/data/zipcodes?province=${encodeURIComponent(addrForm.province)}&city=${encodeURIComponent(addrForm.city)}&district=${encodeURIComponent(addrForm.district)}`
+    `/api/data/zipcodes?province=${encodeURIComponent(addrForm.province)}&city=${encodeURIComponent(addrForm.city)}&district=${encodeURIComponent(addrForm.district)}`,
+    { headers: authHeaders() }
   )
   zipcodes.value = res.data.zipcodes
   if (zipcodes.value.length === 1) addrForm.zipcode = zipcodes.value[0]

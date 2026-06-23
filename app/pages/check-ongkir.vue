@@ -141,6 +141,9 @@ import LoadingSpinner from '~/components/ui/LoadingSpinner.vue'
 
 useSeoMeta({ title: 'Cek Ongkir' })
 
+const token = useCookie('arafahijab_token')
+const authHeaders = () => token.value ? { Authorization: `Bearer ${token.value}` } : {}
+
 const form = reactive({
   province: '',
   city: '',
@@ -165,7 +168,7 @@ const canSubmit = computed(() =>
 
 // Load provinces on mount
 onMounted(async () => {
-  const res = await $fetch<{ message: string; data: { provinces: string[] } }>('/api/data/provinces')
+  const res = await $fetch<{ message: string; data: { provinces: string[] } }>('/api/data/provinces', { headers: authHeaders() })
   provinces.value = res.data.provinces
 })
 
@@ -174,7 +177,8 @@ async function onProvinceChange() {
   cities.value = []; districts.value = []; zipcodes.value = []
   if (!form.province) return
   const res = await $fetch<{ message: string; data: { cities: string[] } }>(
-    `/api/data/cities?province=${encodeURIComponent(form.province)}`
+    `/api/data/cities?province=${encodeURIComponent(form.province)}`,
+    { headers: authHeaders() }
   )
   cities.value = res.data.cities
 }
@@ -184,7 +188,8 @@ async function onCityChange() {
   districts.value = []; zipcodes.value = []
   if (!form.city) return
   const res = await $fetch<{ message: string; data: { districts: string[] } }>(
-    `/api/data/districts?province=${encodeURIComponent(form.province)}&city=${encodeURIComponent(form.city)}`
+    `/api/data/districts?province=${encodeURIComponent(form.province)}&city=${encodeURIComponent(form.city)}`,
+    { headers: authHeaders() }
   )
   districts.value = res.data.districts
 }
@@ -193,7 +198,8 @@ async function onDistrictChange() {
   form.zipcode = ''; zipcodes.value = []
   if (!form.district) return
   const res = await $fetch<{ message: string; data: { zipcodes: string[] } }>(
-    `/api/data/zipcodes?province=${encodeURIComponent(form.province)}&city=${encodeURIComponent(form.city)}&district=${encodeURIComponent(form.district)}`
+    `/api/data/zipcodes?province=${encodeURIComponent(form.province)}&city=${encodeURIComponent(form.city)}&district=${encodeURIComponent(form.district)}`,
+    { headers: authHeaders() }
   )
   zipcodes.value = res.data.zipcodes
   if (zipcodes.value.length === 1) form.zipcode = zipcodes.value[0] ?? ''
@@ -210,6 +216,7 @@ async function checkOngkir() {
       '/api/data/shipping-fee',
       {
         method: 'POST',
+        headers: authHeaders(),
         body: {
           province: form.province,
           city: form.city,
