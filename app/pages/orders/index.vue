@@ -14,6 +14,8 @@
 
       <!-- Filters -->
       <div class="bg-white rounded-2xl shadow-card p-4 mb-5 flex flex-wrap gap-3">
+        <input v-model="filters.search" type="text" placeholder="Cari No. Pesanan..." @keyup.enter="filters.page = 1"
+          class="border border-sand rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-400 flex-1 min-w-[160px] bg-cream" />
         <select v-model="filters.status" @change="filters.page = 1"
           class="border border-sand rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-400 bg-cream">
           <option value="">Semua Status</option>
@@ -24,8 +26,6 @@
           <option value="">Semua Pembayaran</option>
           <option v-for="(label, key) in PAYMENT_STATUS_LABEL" :key="key" :value="key">{{ label }}</option>
         </select>
-        <input v-model="filters.search" type="text" placeholder="Cari No. Pesanan..." @keyup.enter="filters.page = 1"
-          class="border border-sand rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-400 flex-1 min-w-[160px] bg-cream" />
       </div>
 
       <LoadingSpinner v-if="pending" />

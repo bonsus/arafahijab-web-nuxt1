@@ -39,7 +39,6 @@
                 <button type="submit" :disabled="saving" class="px-7 py-3 bg-primary-700 text-white font-bold rounded-xl hover:bg-primary-800 disabled:opacity-60 transition">
                   {{ saving ? 'Menyimpan...' : 'Simpan Perubahan' }}
                 </button>
-                <NuxtLink to="/account/change-password" class="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-primary-600">Ganti Password <ArrowRight class="w-4 h-4" /></NuxtLink>
               </div>
             </form>
           </div>
