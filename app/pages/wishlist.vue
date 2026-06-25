@@ -1,6 +1,15 @@
 <template>
   <NuxtLayout name="default">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+
+        <!-- Sidebar -->
+        <div class="md:col-span-1">
+          <AccountSidebar />
+        </div>
+
+        <!-- Content -->
+        <div class="md:col-span-3">
       <h1 class="text-2xl font-bold text-gray-900 mb-6">Wishlist Saya</h1>
 
       <LoadingSpinner v-if="loading" />
@@ -45,6 +54,8 @@
               {{ item.stock === 0 ? 'Stok Habis' : 'Tambah ke Keranjang' }}
             </button>
           </div>
+        </div>
+      </div>
         </div>
       </div>
     </div>

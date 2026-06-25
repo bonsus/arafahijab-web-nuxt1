@@ -1,26 +1,13 @@
 <template>
   <NuxtLayout name="default">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
       <!-- Account sidebar + content layout -->
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
 
         <!-- Sidebar -->
         <div class="md:col-span-1">
-          <div class="bg-white rounded-3xl shadow-card p-4 space-y-1">
-            <div class="text-center pb-4 border-b border-sand">
-              <div class="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-2">
-                <UserRound class="w-8 h-8 text-primary-600" />
-              </div>
-              <p class="font-semibold text-sm text-gray-900 truncate">{{ authStore.user?.name }}</p>
-              <p class="text-xs text-gray-400 truncate">{{ authStore.user?.customer_category?.name }}</p>
-            </div>
-            <NuxtLink to="/account/profile" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium transition" active-class="bg-primary-50 text-primary-700">Profil Saya</NuxtLink>
-            <NuxtLink to="/account/addresses" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium transition hover:bg-cream" active-class="bg-primary-50 text-primary-700">Alamat</NuxtLink>
-            <NuxtLink to="/orders" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium transition hover:bg-cream" active-class="bg-primary-50 text-primary-700">Pesanan</NuxtLink>
-            <NuxtLink to="/wishlist" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium transition hover:bg-cream" active-class="bg-primary-50 text-primary-700">Wishlist</NuxtLink>
-            <button @click="authStore.logout()" class="flex items-center gap-2.5 w-full px-3 py-2.5 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 transition text-left">Keluar</button>
-          </div>
+          <AccountSidebar />
         </div>
 
         <!-- Profile Form -->
@@ -63,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { UserRound, Check, ArrowRight } from 'lucide-vue-next'
+import { Check, ArrowRight } from 'lucide-vue-next'
 import { formatDate } from '~/utils/format'
 definePageMeta({ middleware: 'auth' })
 useSeoMeta({ title: 'Profil Saya' })
